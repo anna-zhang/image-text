@@ -52,6 +52,10 @@
       color: #F0F0F0;
       margin-top: 10%;
     }
+    .image_labels {
+        margin-top: 0.75em;
+        margin-bottom: 2em;
+    }
     .tags {
       background-color: #F0F0F0;
       width: auto;
@@ -119,31 +123,56 @@
         {% if page_link %}
             <h2>Scanning:</h2>
             <a href="{{ page_link }}" style="overflow-wrap: break-word; color: #C4D1DD">{{ page_link }}</a>
-            <h3>no_alt_images</h3>
-            {% for image in no_alt_images %}
-                {% for label in image.labels %}
-                    {% if 4 > loop.index %}
-                    <span class="tags">{{label.description}}</span>
+            <!-- displays only if there are images in no_alt_images -->
+            {% if no_alt_images %} 
+                <h3>no_alt_images</h3>
+                {% for image in no_alt_images %}
+                    {% if image.labels %}
+                        <img src="{{image.url}}" width=100%>
+                        <div class="image_labels">
+                            {% for label in image.labels %}
+                                {% if 4 > loop.index %}
+                                <span class="tags">{{label.description}}</span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     {% endif %}
                 {% endfor %}
-            {% endfor %}
-            <h3>possible_decorative_images</h3>
-            {% for image in possible_decorative_images %}
-                <img src="{{image.url}}" width=100%>
-                {% for label in image.labels %}
-                    {% if 4 > loop.index %}
-                    <span class="tags">{{label.description}}</span>
+            {% endif %}
+
+            <!-- displays only if there are images in possible_decorative_images -->
+            {% if possible_decorative_images %}
+                <h3>possible_decorative_images</h3>
+                {% for image in possible_decorative_images %}
+                    {% if image.labels %}
+                        <img src="{{image.url}}" width=100%>
+                        <div class="image_labels">
+                            {% for label in image.labels %}
+                                {% if 4 > loop.index %}
+                                <span class="tags">{{label.description}}</span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     {% endif %}
                 {% endfor %}
-            {% endfor %}
-            <h3>warning_images</h3>
-            {% for image in warning_images %}
-                {% for label in image.labels %}
-                    {% if 4 > loop.index %}
-                    <span class="tags">{{label.description}}</span>
+            {% endif %}
+
+            <!-- displays only if there are images in warning_images -->
+            {% if warning_images %}
+                <h3>warning_images</h3>
+                {% for image in warning_images %}
+                    {% if image.labels %}
+                        <img src="{{image.url}}" width=100%>
+                        <div class="image_labels">
+                            {% for label in image.labels %}
+                                {% if 4 > loop.index %}
+                                <span class="tags">{{label.description}}</span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     {% endif %}
                 {% endfor %}
-            {% endfor %}
+            {% endif %}
             
         {% endif %}
       <!-- {% if image_public_url %}
