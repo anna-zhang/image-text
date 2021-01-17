@@ -3,31 +3,107 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0%;
+    }
+    #image-upload {
+      left: 0;
+      background: #2A2B2D;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to top, #FFFFFF, #C4D1DD);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to top, #FFFFFF, #C4D1DD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+    #image-tag {
+      right: 0;
+      background-color: #2A2B2D;
+    }
+    #image-upload-card {
+      background: #2A2B2D;
+      height: 80%;
+      width: 80%;
+      margin: auto;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 1.5em;
+      left: 10%;
+    }
+    #inner-image-upload {
+      padding: 10%;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .split {
+      height: 100%;
+      width: 50%;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      overflow-x: hidden;
+    }
+    #image-tag-details {
+      padding-left: 25%;
+      padding-right: 25%;
+      display: block;
+      color: #F0F0F0;
+      margin-top: 10%;
+    }
+    .tags {
+      background-color: #F0F0F0;
+      width: auto;
+      display: inline-block;
+      padding: 0.5em;
+      border-radius: 0.5em;
+      color: #2A2B2D;
+      margin-bottom: 0.5em;
+    }
+  </style>
   <title>Image Text</title>
 </head>
 <body>
-  <h1>Image</h1>
-  <form action="upload_photo" method="POST" enctype="multipart/form-data">
-    Upload File: <br><input type="file" name="file"><br>
-    <input type="submit" name="submit" value="Submit">
-  </form>
-  {% for photo_document in photo_documents %}
+  <div id="image-upload" class="split">
+    <div id="image-upload-card">
+      <div id="inner-image-upload">
+        <h1 style="color: #F0F0F0;">Image</h1>
+        <form action="upload_photo" method="POST" enctype="multipart/form-data">
+          <label for="image-file" style="color: #F0F0F0;">Upload an image file: </label><input type="file" name="file" id="image-file" style="color: #F0F0F0;"><br>
+          <input type="submit" name="submit" value="Submit">
+        </form>
+      </div>  
+    </div>
+  </div>
+  <div id="image-tag" class="split">
+    <div id="image-tag-details">
+      {% if image_public_url %}
+        <!-- <h2><a href='/'>View All Images</a></h2> -->
+        <img src="{{image_public_url}}" width=100%>
+        <div id="all-labels" style="margin-top: 1.5em;">
+          <!-- <h2>Label Detection:</h2> -->
+          {% for label in labels %}
+            {% if 4 > loop.index %}
+              <span class="tags">{{label.description}}</span>
+            {% endif %}
+          {% endfor %}
+          <br>
+        </div>
+        
+        <!-- <p>LABELS</p>
+        <div>{{ labels }}</div> -->
+      {% endif %}
+    </div>
+    
+  </div>
+
+  
+  <!-- {% for photo_document in photo_documents %}
     <img src="{{photo_document.get('image_public_url')}}" width=200 height=200>
     <p>Top Label Detected using Vision API: {{photo_document.get('top_label')}}</p>
-  {% endfor %}
+  {% endfor %} -->
 
-  {% if image_public_url %}
-    <h2><a href='/'>View All Images</a></h2>
-    <img src="{{image_public_url}}" width=200 height=200>
-    <h2>Label Detection:</h2>
-    {% for label in labels %}
-      {% if 4 > loop.index %}
-        <p>{{label.description}}</p>
-      {% endif %}
-    {% endfor %}
-    <br>
-    <!-- <p>LABELS</p>
-    <div>{{ labels }}</div> -->
-  {% endif %}
+  
 </body>
 </html>
