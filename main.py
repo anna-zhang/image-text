@@ -106,15 +106,49 @@ def scan_url():
     if request.form["site-link"]:
         page_link = request.form["site-link"]
         image_links = get_all_images(page_link)
-        # image_public_url = request.form["image-link"]
-        # client = vision.ImageAnnotatorClient()
-        # image = vision.types.Image()
-        # image.source.image_uri = image_public_url
 
-        # response = client.label_detection(image=image)
+        index_count = 0 # start index count at 0
+        no_alt_images = image_links["no_alt"] # get array of images with no alt text attribute
+        for single_image in no_alt_images:
+            image_public_url = single_image["url"] # get the image's src
+            client = vision.ImageAnnotatorClient()
+            image = vision.types.Image()
+            image.source.image_uri = image_public_url
 
-        # labels = response.label_annotations
+            response = client.label_detection(image=image)
 
+            labels = response.label_annotations
+            image_links["no_alt"][index_count]["labels"] = labels
+            index_count += 1
+        
+        index_count = 0 # start index count at 0
+        possible_decorative_images = image_links["possible_decorative"] # get array of images that have empty alt text (could be decorative image)
+        for single_image in possible_decorative_images:
+            image_public_url = single_image["url"] # get the image's src
+            client = vision.ImageAnnotatorClient()
+            image = vision.types.Image()
+            image.source.image_uri = image_public_url
+
+            response = client.label_detection(image=image)
+
+            labels = response.label_annotations
+            image_links["possible_decorative"][index_count]["labels"] = labels
+            index_count += 1
+        
+        index_count = 0 # start index count at 0
+        warning_images = image_links["warnings"] # get array of images that might have bad alt text
+        for single_image in warning_images:
+            image_public_url = single_image["url"] # get the image's src
+            client = vision.ImageAnnotatorClient()
+            image = vision.types.Image()
+            image.source.image_uri = image_public_url
+
+            response = client.label_detection(image=image)
+
+            labels = response.label_annotations
+            image_links["warnings"][index_count]["labels"] = labels
+            index_count += 1
+        
         # Redirect to the scan page.
         return render_template('scan_page.html', image_links=image_links, page_link=page_link)
 
