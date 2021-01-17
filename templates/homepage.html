@@ -61,6 +61,43 @@
       color: #2A2B2D;
       margin-bottom: 0.5em;
     }
+    .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 140px;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 150%;
+      left: 50%;
+      margin-left: -75px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .tooltip .tooltiptext::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #555 transparent transparent transparent;
+    }
+    
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
   </style>
   <title>Image Text</title>
 </head>
@@ -81,7 +118,7 @@
       {% if image_public_url %}
         <!-- <h2><a href='/'>View All Images</a></h2> -->
         <img src="{{image_public_url}}" width=100%>
-        <div id="all-labels" style="margin-top: 1.5em;">
+        <div id="all-labels" style="margin-top: 1.5em; text-align: center;">
           <!-- <h2>Label Detection:</h2> -->
           {% for label in labels %}
             {% if 4 > loop.index %}
@@ -89,6 +126,12 @@
             {% endif %}
           {% endfor %}
           <br>
+          <div class="tooltip" style="margin-bottom: 2.5em; display: inline-block;">
+            <button onclick="copyTags()" onmouseout="copiedTags()">
+            <span class="tooltiptext" id="tooltipText">Copy tags to clipboard</span>
+            Copy
+            </button>
+          </div>
         </div>
         
         <!-- <p>LABELS</p>
@@ -103,6 +146,30 @@
     <img src="{{photo_document.get('image_public_url')}}" width=200 height=200>
     <p>Top Label Detected using Vision API: {{photo_document.get('top_label')}}</p>
   {% endfor %} -->
+  <script>
+    // tooltip for copying tags
+    function copyTags() {
+        // var copyText1 = document.getElementById("label1").innerHTML;
+        // var copyText2 = document.getElementById("label2").innerHTML;
+        // var copyText3 = document.getElementById("label3").innerHTML;
+        var allTags = document.getElementsByClassName("tags");
+        var input_temp = document.createElement("input");
+        input_temp.value = allTags[0].innerHTML+ ', ' + allTags[1].innerHTML + ', ' + allTags[2].innerHTML;
+        document.body.appendChild(input_temp);
+        input_temp.select();
+        input_temp.setSelectionRange(0, 99999)
+        document.execCommand("copy");
+        document.body.removeChild(input_temp);
+    
+    var tooltip = document.getElementById("tooltipText");
+    tooltip.innerHTML = "Copied: " + input_temp.value;
+    }
+
+    function copiedTags() {
+    var tooltip = document.getElementById("tooltipText");
+    tooltip.innerHTML = "Copy tags to clipboard";
+    }
+    </script>
 
   
 </body>
