@@ -18,12 +18,16 @@
           {% endfor %}
           <br>
           <div class="tooltip" style="display: inline-block;">
-            <button onclick="copyTags()" onmouseout="copiedTags()">
+            <button id="copy-button" onclick="copyTags()" onmouseout="copiedTags()" style="font-size: 1em; margin-top: 0.75em; font-weight: 700; width: auto; padding: 0.8em; border-radius: 0.5em; color: #FFFFFF; background-color: #4E5DE1;">
             <span class="tooltiptext" id="tooltipText">Copy tags to clipboard</span>
-            Copy
+            Copy tags
             </button>
           </div>
         </div>
+        <form action="image_upload">    
+          <button name="try-another-image" id="try-another-image" type="submit" style="font-size: 1em; margin-top: 1.5em; font-weight: 700; text-decoration: underline; background-color: #2A2B2D;">Try another image</button>
+        </form>
+        
       {% endif %}
     </div>
     
