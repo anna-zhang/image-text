@@ -15,15 +15,13 @@ app = Flask(__name__)
 
 @app.route('/')
 def homepage():
-    # Create a Cloud Firestore client.
-    firestore_client = firestore.Client()
+    # Return the homepage
+    return render_template('homepage.html')
 
-    # Use the Cloud Firestore client to fetch information from Cloud Firestore about
-    # each photo.
-    photo_documents = list(firestore_client.collection(u'photos').get())
-
-    # Return a Jinja2 HTML template.
-    return render_template('homepage.html', photo_documents=photo_documents)
+@app.route('/image_upload')
+def image_upload():
+    # Return the homepage
+    return render_template('image_upload.html')
 
 @app.route('/tag_photo', methods=['GET', 'POST'])
 def tag_photo():
@@ -38,8 +36,8 @@ def tag_photo():
 
         labels = response.label_annotations
 
-        # Redirect to the home page.
-        return render_template('homepage.html', labels=labels, image_public_url=image_public_url)
+        # Redirect to the scanned image page.
+        return render_template('image_scan.html', labels=labels, image_public_url=image_public_url)
 
     # If a user uploads an image
     else:
