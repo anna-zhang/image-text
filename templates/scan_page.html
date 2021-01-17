@@ -116,10 +116,37 @@
   </div>
   <div id="image-tag" class="split">
     <div id="image-tag-details">
-        {% if image_links %}
+        {% if page_link %}
             <h2>Scanning:</h2>
             <a href="{{ page_link }}" style="overflow-wrap: break-word; color: #C4D1DD">{{ page_link }}</a>
-            <p>{{ image_links }}</p>
+            <p>{{no_alt_images}}</p>
+            <p>{{possible_decorative_images}}</p>
+            <!-- <h3>no_alt_images</h3>
+            {% for image in no_alt_images %}
+                {% for label in no_alt_images.labels %}
+                    {% if 4 > loop.index %}
+                    <span class="tags">{{label.description}}</span>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %} -->
+            <h3>possible_decorative_images</h3>
+            {% for image in possible_decorative_images %}
+                <img src="{{image.url}}" width=100%>
+                {% for label in image.labels %}
+                    {% if 4 > loop.index %}
+                    <span class="tags">{{label.description}}</span>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+            <!-- <h3>warning_images</h3>
+            {% for image in warning_images %}
+                {% for label in warning_images.labels %}
+                    {% if 4 > loop.index %}
+                    <span class="tags">{{label.description}}</span>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %} -->
+            
         {% endif %}
       <!-- {% if image_public_url %}
         <img src="{{image_public_url}}" width=100%>

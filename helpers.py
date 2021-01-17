@@ -11,6 +11,13 @@ def is_valid(url):
     parsed = urlparse(url)
     return bool(parsed.netloc) and bool(parsed.scheme)
 
+def check_file_extension(url):
+    # Check to make sure file extension is jpeg, png, jpg
+    if (url.endswith(".jpeg") or url.endswith(".png") or url.endswith(".jpg")):
+        return True
+    else:
+        return False
+
 def check_alt_text(text):
     alt_text = text.lower()
     # Check alt text
@@ -53,23 +60,24 @@ def get_all_images(url):
             pass
         # finally, if the url is valid
         if is_valid(img_url):
-            # check alt text
-            img_alt = img.attrs.get("alt")
-            img_warning_type = check_alt_text(img_alt)
-            if (img_warning_type != "OK"):
-                # found potential issues with alt text, save that image's details
-                image_details = {}
-                image_details["url"] = img_url # contains the image's src url
-                image_details["alt"] = img_alt # contains the image's existing alt text
-                image_details["warning"] = img_warning_type # contains the warning type returned from check_alt_text()
-                if (img_warning_type == "no_alt"):
-                    no_alt_images.append(image_details)
-                elif (img_warning_type == "possible_decorative"):
-                    possible_decorative_images.append(image_details)
-                elif (img_warning_type == "includes_extension" or img_warning_type == "includes_type"):
-                    warning_images.append(image_details)
-                else:
-                    print("warning type undefined")
+            if check_file_extension(img_url):
+                # check alt text
+                img_alt = img.attrs.get("alt")
+                img_warning_type = check_alt_text(img_alt)
+                if (img_warning_type != "OK"):
+                    # found potential issues with alt text, save that image's details
+                    image_details = {}
+                    image_details["url"] = img_url # contains the image's src url
+                    image_details["alt"] = img_alt # contains the image's existing alt text
+                    image_details["warning"] = img_warning_type # contains the warning type returned from check_alt_text()
+                    if (img_warning_type == "no_alt"):
+                        no_alt_images.append(image_details)
+                    elif (img_warning_type == "possible_decorative"):
+                        possible_decorative_images.append(image_details)
+                    elif (img_warning_type == "includes_extension" or img_warning_type == "includes_type"):
+                        warning_images.append(image_details)
+                    else:
+                        print("warning type undefined")
 
     # save all image warnings in images dict
     images["no_alt"] = no_alt_images

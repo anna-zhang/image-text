@@ -148,9 +148,14 @@ def scan_url():
             labels = response.label_annotations
             image_links["warnings"][index_count]["labels"] = labels
             index_count += 1
+
+        # Organize data for passing
+        no_alt_images = image_links["no_alt"] # get array of images with no alt text attribute
+        possible_decorative_images = image_links["possible_decorative"] # get array of images that have empty alt text (could be decorative image)
+        warning_images = image_links["warnings"] # get array of images that might have bad alt text
         
         # Redirect to the scan page.
-        return render_template('scan_page.html', image_links=image_links, page_link=page_link)
+        return render_template('scan_page.html', no_alt_images=no_alt_images, possible_decorative_images=possible_decorative_images, warning_images=warning_images, page_link=page_link)
 
 @app.errorhandler(500)
 def server_error(e):
