@@ -23,74 +23,74 @@ def homepage():
     # Return a Jinja2 HTML template.
     return render_template('homepage.html', photo_documents=photo_documents)
 
-@app.route('/upload_photo', methods=['GET', 'POST'])
-def upload_photo():
-    image_public_url = request.form["page-link"]
-    client = vision.ImageAnnotatorClient()
-    image = vision.types.Image()
-    image.source.image_uri = image_public_url
+@app.route('/tag_photo', methods=['GET', 'POST'])
+def tag_photo():
+    # If the user inputs an image's link
+    if request.form["page-link"]:
+        image_public_url = request.form["page-link"]
+        client = vision.ImageAnnotatorClient()
+        image = vision.types.Image()
+        image.source.image_uri = image_public_url
 
-    response = client.label_detection(image=image)
+        response = client.label_detection(image=image)
 
-    labels = response.label_annotations
+        labels = response.label_annotations
 
-    # Redirect to the home page.
-    return render_template('homepage.html', labels=labels, image_public_url=image_public_url)
+        # Redirect to the home page.
+        return render_template('homepage.html', labels=labels, image_public_url=image_public_url)
 
-    
-    
-    
-    # # Create a Cloud Storage client.
-    # storage_client = storage.Client()
+    # If a user uploads an image
+    else:
+        # Create a Cloud Storage client.
+        storage_client = storage.Client()
 
-    # # Get the Cloud Storage bucket that the file will be uploaded to.
-    # bucket = storage_client.get_bucket(os.environ.get('CLOUD_STORAGE_BUCKET'))
+        # Get the Cloud Storage bucket that the file will be uploaded to.
+        bucket = storage_client.get_bucket(os.environ.get('CLOUD_STORAGE_BUCKET'))
 
-    # # Create a new blob and upload the file's content to Cloud Storage.
-    # photo = request.files['file']
-    # blob = bucket.blob(photo.filename)
-    # blob.upload_from_string(
-    #         photo.read(), content_type=photo.content_type)
+        # Create a new blob and upload the file's content to Cloud Storage.
+        photo = request.files['file']
+        blob = bucket.blob(photo.filename)
+        blob.upload_from_string(
+                photo.read(), content_type=photo.content_type)
 
-    # # Make the blob publicly viewable.
-    # blob.make_public()
-    # image_public_url = blob.public_url
-    
-    # # Create a Cloud Vision client.
-    # vision_client = vision.ImageAnnotatorClient()
+        # Make the blob publicly viewable.
+        blob.make_public()
+        image_public_url = blob.public_url
+        
+        # Create a Cloud Vision client.
+        vision_client = vision.ImageAnnotatorClient()
 
-    # # Retrieve a Vision API response for the photo stored in Cloud Storage
-    # image = vision.types.Image()
-    # image.source.image_uri = 'gs://{}/{}'.format(os.environ.get('CLOUD_STORAGE_BUCKET'), blob.name)
-    # # image.source.image_uri = 'https://i.guim.co.uk/img/media/03734ee186eba543fb3d0e35db2a90a14a5d79e3/0_173_5200_3120/master/5200.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=9c30ed97ea8731f3e2a155467201afe3'
-    
-    # response = vision_client.annotate_image({'image': image})
-    # labels = response.label_annotations
-    # faces = response.face_annotations
-    # web_entities = response.web_detection.web_entities
+        # Retrieve a Vision API response for the photo stored in Cloud Storage
+        image = vision.types.Image()
+        image.source.image_uri = 'gs://{}/{}'.format(os.environ.get('CLOUD_STORAGE_BUCKET'), blob.name)
+        
+        response = vision_client.annotate_image({'image': image})
+        labels = response.label_annotations
+        faces = response.face_annotations
+        web_entities = response.web_detection.web_entities
 
-    # # Create a Cloud Firestore client
-    # firestore_client = firestore.Client()
+        # Create a Cloud Firestore client
+        firestore_client = firestore.Client()
 
-    # # Get a reference to the document we will upload to
-    # doc_ref = firestore_client.collection(u'photos').document(blob.name)
+        # Get a reference to the document we will upload to
+        doc_ref = firestore_client.collection(u'photos').document(blob.name)
 
-    # # Note: If we are using Python version 2, we need to convert
-    # # our image URL to unicode to save it to Cloud Firestore properly.
-    # if sys.version_info < (3, 0):
-    #     image_public_url = unicode(image_public_url, "utf-8")
+        # Note: If we are using Python version 2, we need to convert
+        # our image URL to unicode to save it to Cloud Firestore properly.
+        if sys.version_info < (3, 0):
+            image_public_url = unicode(image_public_url, "utf-8")
 
-    # # Construct key/value pairs with data
-    # data = {
-    #     u'image_public_url': image_public_url,
-    #     u'top_label': labels[0].description
-    # }
+        # Construct key/value pairs with data
+        data = {
+            u'image_public_url': image_public_url,
+            u'top_label': labels[0].description
+        }
 
-    # # Set the document with the data
-    # doc_ref.set(data)
+        # Set the document with the data
+        doc_ref.set(data)
 
-    # # Redirect to the home page.
-    # return render_template('homepage.html', labels=labels, faces=faces, web_entities=web_entities, image_public_url=image_public_url)
+        # Redirect to the home page.
+        return render_template('homepage.html', labels=labels, faces=faces, web_entities=web_entities, image_public_url=image_public_url)
 
 
 @app.errorhandler(500)

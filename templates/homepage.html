@@ -107,8 +107,10 @@
       <div id="inner-image-upload">
         <h1 style="color: #F0F0F0;">Image</h1>
         <!-- <form action="upload_photo" method="POST" enctype="multipart/form-data"> -->
-        <form action="upload_photo" method="POST">
-          <!-- <label for="image-file" style="color: #F0F0F0;">Upload an image file: </label><input type="file" name="file" id="image-file" style="color: #F0F0F0;"><br> -->
+        <form action="tag_photo" method="POST" enctype="multipart/form-data">
+          <!-- User uploads image from computer -->
+          <label for="image-file" style="color: #F0F0F0;">Upload an image file: </label><input type="file" name="file" id="image-file" style="color: #F0F0F0;"><br>
+          <!-- User inputs an image's link -->
           <label for="page-link" style="color: #F0F0F0;">Link to the website:</label><br><input type="url" id="page-link" name="page-link">
           <input type="submit" name="submit" value="Submit">
         </form>
