@@ -33,7 +33,11 @@ def check_alt_text(text):
 def get_all_images(url):
     # Return all image URLS on that website url
     soup = bs(requests.get(url).content, "html.parser")
-    images = []
+    images = {}
+    no_alt_images = [] # includes images that return no_alt
+    possible_decorative_images = [] # includes images that return possible_decorative
+    warning_images = [] # includes images that return includes_type or includes_extension
+    
     for img in tqdm(soup.find_all("img"), "Extracting images"):
         img_url = img.attrs.get("src")
         if not img_url:
@@ -51,12 +55,26 @@ def get_all_images(url):
         if is_valid(img_url):
             # check alt text
             img_alt = img.attrs.get("alt")
-            print(check_alt_text(img_alt))
-            if (check_alt_text(img_alt) != "OK"):
-                # found potential issues with alt text
+            img_warning_type = check_alt_text(img_alt)
+            if (img_warning_type != "OK"):
+                # found potential issues with alt text, save that image's details
                 image_details = {}
-                image_details["url"] = img_url
-                image_details["alt"] = img_alt
-                images.append(image_details)
+                image_details["url"] = img_url # contains the image's src url
+                image_details["alt"] = img_alt # contains the image's existing alt text
+                image_details["warning"] = img_warning_type # contains the warning type returned from check_alt_text()
+                if (img_warning_type == "no_alt"):
+                    no_alt_images.append(image_details)
+                elif (img_warning_type == "possible_decorative"):
+                    possible_decorative_images.append(image_details)
+                elif (img_warning_type == "includes_extension" or img_warning_type == "includes_type"):
+                    warning_images.append(image_details)
+                else:
+                    print("warning type undefined")
+
+    # save all image warnings in images dict
+    images["no_alt"] = no_alt_images
+    images["possible_decorative"] = possible_decorative_images
+    images["warnings"] = warning_images
+
     return images
 

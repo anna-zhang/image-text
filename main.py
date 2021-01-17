@@ -116,7 +116,7 @@ def scan_url():
         # labels = response.label_annotations
 
         # Redirect to the scan page.
-        return render_template('scan_page.html', image_links=image_links)
+        return render_template('scan_page.html', image_links=image_links, page_link=page_link)
 
 @app.errorhandler(500)
 def server_error(e):

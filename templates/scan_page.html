@@ -117,7 +117,8 @@
   <div id="image-tag" class="split">
     <div id="image-tag-details">
         {% if image_links %}
-            <h2>Image links</h2>
+            <h2>Scanning:</h2>
+            <a href="{{ page_link }}" style="overflow-wrap: break-word; color: #C4D1DD">{{ page_link }}</a>
             <p>{{ image_links }}</p>
         {% endif %}
       <!-- {% if image_public_url %}
