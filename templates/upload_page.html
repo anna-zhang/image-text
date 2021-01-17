@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Upload Page
+{% endblock %}
+
+{% block main %}
+  <div id="image-upload">
+    <div id="image-upload-card" style="text-align: center; font-size: 1.5em;">
+      <div id="inner-image-upload" style="margin: auto; width: 100%; padding: 0%">
+        <h1 style="color: #F0F0F0; margin-top: 0px;">Website</h1>
+        <form action="scan_url" method="POST" enctype="multipart/form-data">
+          <!-- User inputs a website link -->
+          <label for="site-link" style="color: #F0F0F0; display: none;">Website link:</label><input type="url" id="site-link" name="site-link" style="border-radius: 0.5em; width: 80%; padding: 0.8em 0.15em; color: #2A2B2D;  margin-bottom: 1.5em; font-size: 0.75em;" placeholder="Website link" aria-placeholder="Website link" required>
+          <input type="submit" name="submit" value="Scan" style="font-weight: 700; font-size: 0.85em; width: 6em;padding: 0.55em; border-radius: 0.5em; color: #FFFFFF; background-color: #4E5DE1;">
+        </form>
+      </div>  
+    </div>
+  </div>
+{% endblock %}

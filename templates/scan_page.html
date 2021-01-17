@@ -9,10 +9,12 @@
     <div id="page-upload-card">
       <div id="page-image-upload">
         <h1 style="color: #F0F0F0;">Website</h1>
-        <form action="scan_url" method="POST" enctype="multipart/form-data">
-          <!-- User inputs a website link -->
-          <label for="site-link" style="color: #F0F0F0;">Website link:</label><br><input type="url" id="site-link" name="site-link" required>
-          <input type="submit" name="submit" value="Submit">
+        {% if page_link %}
+          <h2 style="color: #F0F0F0;">Scanning:</h2>
+          <a href="{{ page_link }}" style="overflow-wrap: break-word; color: #C4D1DD">{{ page_link }}</a>
+        {% endif %}
+        <form action="page_scan" style="text-align: left; position: fixed; bottom: 0em;">    
+          <button name="try-another-page" id="try-another-page" type="submit" style="text-align: left; font-size: 1em; margin-top: 1.5em; font-weight: 700; text-decoration: underline; background-color: #2A2B2D;">Try another URL</button>
         </form>
       </div>  
     </div>
@@ -20,8 +22,7 @@
   <div id="page-tag" class="split-page">
     <div id="page-tag-details">
         {% if page_link %}
-            <h2>Scanning:</h2>
-            <a href="{{ page_link }}" style="overflow-wrap: break-word; color: #C4D1DD">{{ page_link }}</a>
+            <h2>Results:</h2>
             <!-- displays only if there are images in no_alt_images -->
             {% if no_alt_images %} 
                 <h3>no_alt_images</h3>

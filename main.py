@@ -16,7 +16,7 @@ app = Flask(__name__)
 @app.route('/')
 def homepage():
     # Return the homepage
-    return render_template('homepage.html')
+    return render_template('intropage.html')
 
 @app.route('/home')
 def intropage():
@@ -101,7 +101,7 @@ def tag_photo():
 @app.route('/page_scan')
 def page_scan():
     # Redirect to the home page.
-    return render_template('scan_page.html')
+    return render_template('upload_page.html')
 
 @app.route('/scan_url', methods=['GET', 'POST'])
 def scan_url():
