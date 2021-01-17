@@ -164,7 +164,8 @@
     }
 
     function validateForm() {
-      if ((document.getElementById("image-file").files.length == 0) || (document.getElementById("image-link") == "" || " "))
+      const file = document.querySelector('#image-file');
+      if ((document.getElementById("image-file").value == "") && (document.getElementById("image-link") == "" || " "))
       {
         alert("You must either upload an image or input an image's link.");
         return false;
