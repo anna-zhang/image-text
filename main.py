@@ -7,6 +7,8 @@ from google.cloud import firestore
 from google.cloud import storage
 from google.cloud import vision
 
+from helpers import is_valid, get_all_images
+
 
 app = Flask(__name__)
 
@@ -92,6 +94,29 @@ def tag_photo():
         # Redirect to the home page.
         return render_template('homepage.html', labels=labels, faces=faces, web_entities=web_entities, image_public_url=image_public_url)
 
+
+@app.route('/page_scan')
+def page_scan():
+    # Redirect to the home page.
+    return render_template('scan_page.html')
+
+@app.route('/scan_url', methods=['GET', 'POST'])
+def scan_url():
+    # If the user inputs a site's link
+    if request.form["site-link"]:
+        page_link = request.form["site-link"]
+        image_links = get_all_images(page_link)
+        # image_public_url = request.form["image-link"]
+        # client = vision.ImageAnnotatorClient()
+        # image = vision.types.Image()
+        # image.source.image_uri = image_public_url
+
+        # response = client.label_detection(image=image)
+
+        # labels = response.label_annotations
+
+        # Redirect to the scan page.
+        return render_template('scan_page.html', image_links=image_links)
 
 @app.errorhandler(500)
 def server_error(e):
