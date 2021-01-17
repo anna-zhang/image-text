@@ -106,12 +106,12 @@
     <div id="image-upload-card">
       <div id="inner-image-upload">
         <h1 style="color: #F0F0F0;">Image</h1>
-        <!-- <form action="upload_photo" method="POST" enctype="multipart/form-data"> -->
-        <form action="tag_photo" method="POST" enctype="multipart/form-data">
+        <form action="tag_photo" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
           <!-- User uploads image from computer -->
-          <label for="image-file" style="color: #F0F0F0;">Upload an image file: </label><input type="file" name="file" id="image-file" style="color: #F0F0F0;"><br>
+          <label for="image-file" style="color: #F0F0F0;">Image file: </label><input type="file" name="file" id="image-file" style="color: #F0F0F0;"><br>
+          
           <!-- User inputs an image's link -->
-          <label for="page-link" style="color: #F0F0F0;">Link to the website:</label><br><input type="url" id="page-link" name="page-link">
+          <label for="image-link" style="color: #F0F0F0;">Image link:</label><br><input type="url" id="image-link" name="image-link">
           <input type="submit" name="submit" value="Submit">
         </form>
       </div>  
@@ -120,10 +120,9 @@
   <div id="image-tag" class="split">
     <div id="image-tag-details">
       {% if image_public_url %}
-        <!-- <h2><a href='/'>View All Images</a></h2> -->
         <img src="{{image_public_url}}" width=100%>
         <div id="all-labels" style="margin-top: 1.5em; text-align: center;">
-          <!-- <h2>Label Detection:</h2> -->
+          <!-- Labels -->
           {% for label in labels %}
             {% if 4 > loop.index %}
               <span class="tags">{{label.description}}</span>
@@ -137,25 +136,15 @@
             </button>
           </div>
         </div>
-        
-        <!-- <p>LABELS</p>
-        <div>{{ labels }}</div> -->
       {% endif %}
     </div>
     
   </div>
 
   
-  <!-- {% for photo_document in photo_documents %}
-    <img src="{{photo_document.get('image_public_url')}}" width=200 height=200>
-    <p>Top Label Detected using Vision API: {{photo_document.get('top_label')}}</p>
-  {% endfor %} -->
   <script>
     // tooltip for copying tags
     function copyTags() {
-        // var copyText1 = document.getElementById("label1").innerHTML;
-        // var copyText2 = document.getElementById("label2").innerHTML;
-        // var copyText3 = document.getElementById("label3").innerHTML;
         var allTags = document.getElementsByClassName("tags");
         var input_temp = document.createElement("input");
         input_temp.value = allTags[0].innerHTML+ ', ' + allTags[1].innerHTML + ', ' + allTags[2].innerHTML;
@@ -173,8 +162,14 @@
     var tooltip = document.getElementById("tooltipText");
     tooltip.innerHTML = "Copy tags to clipboard";
     }
-    </script>
 
-  
+    function validateForm() {
+      if ((document.getElementById("image-file").files.length == 0) || (document.getElementById("image-link") == "" || " "))
+      {
+        alert("You must either upload an image or input an image's link.");
+        return false;
+      }
+    }
+    </script>
 </body>
 </html>

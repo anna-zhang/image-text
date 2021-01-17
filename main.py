@@ -26,8 +26,8 @@ def homepage():
 @app.route('/tag_photo', methods=['GET', 'POST'])
 def tag_photo():
     # If the user inputs an image's link
-    if request.form["page-link"]:
-        image_public_url = request.form["page-link"]
+    if request.form["image-link"]:
+        image_public_url = request.form["image-link"]
         client = vision.ImageAnnotatorClient()
         image = vision.types.Image()
         image.source.image_uri = image_public_url
