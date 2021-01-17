@@ -94,20 +94,55 @@
     form {
         text-align: center;
     }
+
+    #page-upload {
+      left: 0;
+      background: #2A2B2D;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to top, #FFFFFF, #C4D1DD);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to top, #FFFFFF, #C4D1DD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+    #page-tag {
+      right: 0;
+      background-color: #2A2B2D;
+    }
+    #page-tag-details {
+      padding-left: 25%;
+      padding-right: 25%;
+      display: block;
+      color: #F0F0F0;
+      margin-top: 10%;
+    }
     #inner-image-upload {
       padding: 10%;
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
     }
-    /* .split {
+    #page-upload-card {
+      background: #2A2B2D;
+      height: 80%;
+      width: 80%;
+      margin: auto;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 1.5em;
+      left: 10%;
+    }
+    #page-image-upload {
+      padding: 10%;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .split-page {
       height: 100%;
       width: 50%;
       position: fixed;
       z-index: 1;
       top: 0;
       overflow-x: hidden;
-    } */
+    }
     #image-tag-details {
       padding-left: 15%;
       padding-right: 15%;
@@ -176,7 +211,7 @@
       top: 50%;
       transform: translateY(-50%);
       border-radius: 1.5em;
-      left: 50%;
+      left: 25%;
     }
 
     #intro-title {

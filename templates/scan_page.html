@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block main %}
-  <div id="image-upload" class="split">
-    <div id="image-upload-card">
-      <div id="inner-image-upload">
+  <div id="page-upload" class="split-page">
+    <div id="page-upload-card">
+      <div id="page-image-upload">
         <h1 style="color: #F0F0F0;">Website</h1>
         <form action="scan_url" method="POST" enctype="multipart/form-data">
           <!-- User inputs a website link -->
@@ -17,8 +17,8 @@
       </div>  
     </div>
   </div>
-  <div id="image-tag" class="split">
-    <div id="image-tag-details">
+  <div id="page-tag" class="split-page">
+    <div id="page-tag-details">
         {% if page_link %}
             <h2>Scanning:</h2>
             <a href="{{ page_link }}" style="overflow-wrap: break-word; color: #C4D1DD">{{ page_link }}</a>

@@ -18,6 +18,11 @@ def homepage():
     # Return the homepage
     return render_template('homepage.html')
 
+@app.route('/home')
+def intropage():
+    # Return the intropage
+    return render_template('intropage.html')
+
 @app.route('/image_upload')
 def image_upload():
     # Return the homepage
@@ -90,7 +95,7 @@ def tag_photo():
         doc_ref.set(data)
 
         # Redirect to the home page.
-        return render_template('homepage.html', labels=labels, faces=faces, web_entities=web_entities, image_public_url=image_public_url)
+        return render_template('image_scan.html', labels=labels, faces=faces, web_entities=web_entities, image_public_url=image_public_url)
 
 
 @app.route('/page_scan')
