@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Home
+{% endblock %}
+
+{% block main %}
+
+    <div id="intro-section">
+      <div id="intro-title" style="padding-bottom: 0.1em;">
+        <h1 style="color: #F0F0F0; text-align: center;">A11y Text</h1>
+      </div>
+
+      <div style="margin-left: 20em; margin-right: 20em;">
+        <div style="color: #F0F0F0;">
+            <h2 style="color: #F0F0F0; text-align: center;">About</h2>
+            <p>A11y Text is a machine learning-enabled web application that scans a URL for images with missing or poor alt text and generates relevant keywords for each of these images using Google Cloud’s Vision API. This gives individuals with visual impairments some information on the content of these images, while also assisting developers in writing alt text for their sites.</p>
+            <p>The embrace of digital accessibility is integral to building a more inclusive Internet, and ultimately a more inclusive world. We hope that A11y Text helps to promote the development of a more accessible digital world.</p>
+        </div>
+        <div>
+            <h2 style="color: #F0F0F0; text-align: center; margin-top: 1.5em;">Try it out!</h2>
+            <form action="page_scan">    
+              <button name="try-another-page" id="try-another-page" type="submit" style="font-weight: 700; font-size: 1em; width: auto;padding: 1em; border-radius: 0.5em; margin-bottom: 1em; color: #FFFFFF; background-color: #4E5DE1;">Scan an entire URL</button>
+            </form>
+            <form action="image_upload">    
+              <button name="try-another-image" id="try-another-image" type="submit" style="font-weight: 700; font-size: 1em; width: auto;padding: 1em; border-radius: 0.5em; color: #FFFFFF; background-color: #4E5DE1;">Scan a single image</button>
+            </form>
+        </div>
+      </div>
+
+      
+
+    </div>
+
+    <script type="text/javascript">
+      document.getElementById("submit").onclick = function () {
+          location.href = "www.yoursite.com";
+      };
+  </script>
+  
+{% endblock %}
