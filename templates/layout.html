@@ -7,17 +7,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
     .button {
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  color:black;
-  margin: 4px 2px;
-  cursor: pointer;
-}
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      color:black;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
     body {
       font-family: 'Inter', sans-serif;
       margin: 0%;
@@ -227,11 +227,29 @@
     }
 
     #intro-title {
+      position: relative;
       padding: 5%;
-      position: absolute;
       top: 5%;
       transform: translateY(-30%);
     }
+
+    .intro-column {
+      float: left;
+      padding: 5%;
+      width: 40%;
+    }
+
+    .intro-row:after {
+      position: absolute;
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    /* #intro-buttonlayout{
+      position:absolute;
+    }
+ */
   </style>
 
   <title>Image Text: {% block title %}{% endblock %}</title>

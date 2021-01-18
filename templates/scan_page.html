@@ -12,6 +12,14 @@
         {% if page_link %}
           <h2 style="color: #F0F0F0;">Scanning:</h2>
           <a href="{{ page_link }}" style="overflow-wrap: break-word; color: #C4D1DD">{{ page_link }}</a>
+          <h3 style="color: #F0F0F0;">Critical issues:</h3>
+          <h4 style="color: #F0F0F0;">No alt attributes: {{ no_alt_images|length }} images</h4>
+          <p>Alt text is important for individuals with visual impairments who may otherwise not be able to understand the content presented in the image. If the image is decorative, the alt attribute should be set to empty (alt=“”)</p>
+          <h3 style="color: #F0F0F0;">Warnings:</h3>
+          <h4 style="color: #F0F0F0;">Empty or null alt attributes: {{ possible_decorative_images|length }} images</h4>
+          <p>If the images are decorative, empty alt text is fine. However, if the images contain important content, appropriate alt text should be included.</p>
+          <h4 style="color: #F0F0F0;">Bad alt text: {{ warning_images|length }} images</h4>
+          <p>While alt attributes exist, they do not efficiently describe the content and function of the image. Alt text should not include file extensions. Furthermore, they do not need to announce the type of content presented, as screen-reader tools already do this.</p>
         {% endif %}
         <form action="page_scan" style="text-align: left; position: fixed; bottom: 0em;">    
           <button name="try-another-page" id="try-another-page" type="submit" style="text-align: left; font-size: 1em; margin-top: 1.5em; font-weight: 700; text-decoration: underline; background-color: #2A2B2D;">Try another URL</button>

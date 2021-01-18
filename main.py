@@ -110,7 +110,11 @@ def scan_url():
         page_link = request.form["site-link"]
         image_links = get_all_images(page_link)
 
-        index_count = 0 # start index count at 0
+        all_images = {} # hold all images information
+        all_images["no_alt"] = [] # hold all images with no_alt
+        all_images["possible_decorative"] = []
+        all_images["warnings"] = []
+
         no_alt_images = image_links["no_alt"] # get array of images with no alt text attribute
         for single_image in no_alt_images:
             image_public_url = single_image["url"] # get the image's src
@@ -121,10 +125,15 @@ def scan_url():
             response = client.label_detection(image=image)
 
             labels = response.label_annotations
-            image_links["no_alt"][index_count]["labels"] = labels
-            index_count += 1
+            if labels: 
+                image_details = {}
+                image_details["url"] = image_public_url
+                image_details["alt"] = single_image["alt"]
+                image_details["warning"] = single_image["warning"]
+                image_details["labels"] = labels
+                all_images["no_alt"].append(image_details) # save details to no_alt
+
         
-        index_count = 0 # start index count at 0
         possible_decorative_images = image_links["possible_decorative"] # get array of images that have empty alt text (could be decorative image)
         for single_image in possible_decorative_images:
             image_public_url = single_image["url"] # get the image's src
@@ -135,8 +144,13 @@ def scan_url():
             response = client.label_detection(image=image)
 
             labels = response.label_annotations
-            image_links["possible_decorative"][index_count]["labels"] = labels
-            index_count += 1
+            if labels: 
+                image_details = {}
+                image_details["url"] = image_public_url
+                image_details["alt"] = single_image["alt"]
+                image_details["warning"] = single_image["warning"]
+                image_details["labels"] = labels
+                all_images["possible_decorative"].append(image_details) # save details to possible_decorative
         
         index_count = 0 # start index count at 0
         warning_images = image_links["warnings"] # get array of images that might have bad alt text
@@ -149,16 +163,21 @@ def scan_url():
             response = client.label_detection(image=image)
 
             labels = response.label_annotations
-            image_links["warnings"][index_count]["labels"] = labels
-            index_count += 1
+            if labels: 
+                image_details = {}
+                image_details["url"] = image_public_url
+                image_details["alt"] = single_image["alt"]
+                image_details["warning"] = single_image["warning"]
+                image_details["labels"] = labels
+                all_images["warnings"].append(image_details) # save details to warnings
 
         # Organize data for passing
-        no_alt_images = image_links["no_alt"] # get array of images with no alt text attribute
-        possible_decorative_images = image_links["possible_decorative"] # get array of images that have empty alt text (could be decorative image)
-        warning_images = image_links["warnings"] # get array of images that might have bad alt text
+        no_alt_images = all_images["no_alt"] # get array of images with no alt text attribute
+        possible_decorative_images = all_images["possible_decorative"] # get array of images that have empty alt text (could be decorative image)
+        warning_images = all_images["warnings"] # get array of images that might have bad alt text
         
         # Redirect to the scan page.
-        return render_template('scan_page.html', no_alt_images=no_alt_images, possible_decorative_images=possible_decorative_images, warning_images=warning_images, page_link=page_link)
+        return render_template('scan_page.html', no_alt_images=no_alt_images, possible_decorative_images=possible_decorative_images, warning_images=warning_images, page_link=page_link, image_links=image_links)
 
 @app.errorhandler(500)
 def server_error(e):
