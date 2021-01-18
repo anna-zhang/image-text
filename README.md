@@ -1,126 +1,19 @@
-# Google Cloud Vision API Sample
+# A11y Text
 
-This sample demonstrates how to use the following APIs:
+A11y Text promotes the development of a more accessible digital world. Using Google Cloud’s Vision API, our web app generates relevant keywords for missing or poor alt text on images.
 
-- [Google Cloud Vision API](https://cloud.google.com/vision/)
-- [Google Cloud Storage](https://cloud.google.com/storage/)
-- [Google Cloud Firestore](https://cloud.google.com/firestore/)
+We used Python, HTML, CSS, JavaScript, Google Cloud Vision API, Google Cloud Storage, and Google Cloud Firestone to build the project.
 
-This sample application will be deployed on the [App Engine Standard Environment](https://cloud.google.com/appengine/docs/standard/python3/). The frontend of the application displays information retrieved from the `Vision API` including `label detection`, `face detection`, and `web entity detection`.
+## Inspiration:
 
-## Setup
+In an increasingly digital world where the Internet influences essential parts of our everyday lives, from the way we communicate with friends and family members to how we apply for health insurance, it is essential that web accessibility is prioritized. Yet, according to WebAIM’s 2020 accessibility analysis, 98.1% of home pages of the top 1 million websites had detectable accessibility issues. WebAIM estimates that “users with disabilities would expect to encounter detectable errors on 1 in every 14 home page elements with which they engage,” which means that they may be excluded from the information and services that these websites offer.
 
-### Create a Project
+The same analysis reveals that missing alternative text (alt text) for images was the second most common failure on home pages. What happens if an image link breaks? Or if an individual is using a screen reader? Or if a browser can’t load an image? The presence of alt text not only improves the user experience for all users but also is essential for individuals with visual impairments.
 
-1. Create a project with the [Google Cloud Platform Console Cloud Resource Manager](https://console.cloud.google.com/cloud-resource-manager).
-    1. Make note of your project ID, which may be different than your project name.
-    1. Make sure to [Enable Billing](https://console.cloud.google.com/billing?debugUI=DEVELOPERS) for your project.
+We created A11y Text, a machine learning-enabled web application that scans a URL for images with missing or poor alt text and generates relevant keywords for each of these images using Google Cloud’s Vision API. This gives individuals with visual impairments some information on the content of these images, while also assisting developers in writing alt text for their sites.
 
-### Enable the APIs
+The embrace of digital accessibility is integral to building a more inclusive Internet, and ultimately a more inclusive world. We hope that A11y Text helps to promote the development of a more accessible digital world.
 
-1. Go to the [Google Cloud Platform console](https://console.cloud.google.com).
-1. Click the button in the top left, select `APIs & Services`.
-1. Click 'Enable APIs and Services' at the top, search for `Vision`.
-1. Click the first result, then click the `Enable` button.
-1. Enable the Cloud Firestore API the same way. (If it says 'Manage' when you visit its page, it's already enabled)
-1. Enable the Google Cloud Storage JSON API as well. (If it says 'Manage' when you visit its page, it's already enabled)
+## Screenshot
 
-### Create a Cloud Storage Bucket
-
-Create a Cloud Storage bucket.
-
-1. Go to the [Google Cloud Platform console](https://console.cloud.google.com).
-1. Click the button in the top left, scroll down and select `Storage`.
-1. Click `Create Bucket` at the top.
-1. Name your bucket the same as your project ID.
-
-Set the `CLOUD_STORAGE_BUCKET` environment variable to your Cloud Storage bucket using command line:
-
-    export CLOUD_STORAGE_BUCKET=INSERT_NAME_OF_YOUR_BUCKET
-
-### Set up Cloud Firestore
-
-Set up your Cloud Firestore database.
-
-1. Go to the [Google Cloud Platform console](https://console.cloud.google.com).
-1. Click the button in the top left, and scroll down and select `Firestore`.
-1. In the 'Select a database service' screen, choose `Cloud Firestore in Native mode`.
-1. Select a Cloud Firestore location that is close to you geographically and click `Create Database`.
-
-Download the [Google Cloud SDK command line tool](https://cloud.google.com/sdk/downloads#interactive), also known as `gcloud`.
-
-Initialize gcloud, selecting your Google account and project ID:
-
-    gcloud init
-
-## Getting the sample code
-
-Run the following command to clone the Github repository:
-
-    git clone https://github.com/GoogleCloudPlatform/hackathon-toolkit.git
-
-Change directory to the sample code location:
-
-    cd hackathon-toolkit/vision
-
-## Authentication
-
-Set up a service account.
-
-1. Visit the [Google Cloud Platform console](https://console.cloud.google.com).
-1. Search `Service Accounts` on the top search bar.
-1. Click on `Service accounts`, and click the `Create Service Account` button at the top.
-1. Give your service account a name and click `CREATE`.
-    1. For service account permissions, click `Select a role` and choose `Project > Owner`.
-    1. Click `CONTINUE`.
-    1. Click `CREATE KEY`, and click `CREATE` to download a JSON service account key to your computer.
-    1. Click `DONE` to finish creating your service account.
-1. Save the generated service account key JSON file to somewhere on your computer and rename it to `key.json`.
-
-Set the `GOOGLE_APPLICATION_CREDENTIALS` variable to point to the service account key location:
-
-    export GOOGLE_APPLICATION_CREDENTIALS=/path/to/your/service/account/key.json
-
-## Running Locally
-
-Set up your virtual environment:
-
-    virtualenv env
-
-Note: If you do not already have `virtualenv` installed, run 'sudo easy_install pip' and then 'pip install virtualenv'.
-
-Enter your virtual environment:
-
-    source env/bin/activate
-
-Install dependencies:
-
-    pip install -r requirements.txt
-
-Test your application locally:
-
-    python main.py
-
-Visit `localhost:8080` to view your application running locally. Press `Control-C` from command line when you are finished.
-
-When you are ready to leave your virtual environment:
-
-    deactivate
-
-## Deploying to App Engine
-
-Before deploying, open the `app.yaml` file and replace `YOUR_CLOUD_STORAGE_BUCKET` with the name of your Cloud Storage bucket. This allows your code to access the appropriate environment variable when it is deployed.
-
-Deploy your application to App Engine (should take <1 minute). When prompted to choose a region, choose the one that is closest to you geographically.
-
-    gcloud app deploy
-
-## Further Reference
-
-- [Google Cloud Vision API](https://cloud.google.com/vision/docs/)
-- [Google Cloud Firestore](https://cloud.google.com/firestore/docs/)
-- [Google Cloud Storage](https://cloud.google.com/storage/docs/)
-- [App Engine Standard Python 3.7 Quickstart Tutorial](https://cloud.google.com/appengine/docs/standard/python3/quickstart)
-- [Documentation for Google Cloud Client Libraries for Python](https://googlecloudplatform.github.io/google-cloud-python/latest/index.html)
-- [Flask Web Framework](http://flask.pocoo.org/docs/1.0/)
-- [Generating Templates in Flask with Jinja2](http://flask.pocoo.org/docs/1.0/quickstart/#rendering-templates)
+![A11y Text Homepage](static/A11yText.jpg)
